@@ -1,28 +1,32 @@
-# manages databases, printing to file, getting from file, etc.
 import pandas as pd
-from Book import Book
+import numpy as np
 
 class Inventory:
-    def __init__(self, filename1, filename2):
-        self.inventoryFile=filename1
-        self.bookFile = filename2
+    def __init__(self):
         self.inventoryList = []
         self.bookList=[]
-    def save2file(self):
-        self.inventoryList.to_csv(self.filename1, sep='\t', encoding='utf-8')
-    def readData(self):
+        self.filename1 = 'inventory.csv'
+        self.filename2 = 'book.csv'
         # read  file
-        self.inventoryList = pd.read_csv(self.inventoryFile)
-        self.bookList = pd.read_csv(self.bookFile)
+        self.inventoryList = pd.read_csv(self.filename1)
+        self.bookList = pd.read_csv(self.filename2)
+    def save2file(self):
+        self.inventoryList.to_csv(self.filename1, encoding='utf-8', index=False)
     # default adds 1, checks to see if input is int, if not returns error message
-    def addQuantity(self, idx, num=1):
-        self.inventoryList.loc[idx - 1]['Quantity'] = self.inventoryList.loc[idx - 1]['Quantity'] + num
-
+    # return void
+    def addQuantity(self, isbn, num=1):
+        self.inventoryList.loc[self.inventoryList.ISBN==isbn, 'Quantity']+=num
+        self.save2file()
     # defaults -1, checks to see if input is int, if not returns error message
-    def removeQuantity(self, idx, num=1):
-        self.inventoryList.loc[idx - 1]['Quantity'] = self.inventoryList.loc[idx - 1]['Quantity'] + num
-
+    # return void
+    def removeQuantity(self, isbn, num=1):
+        # df.drop(df.loc[df['line_race'] == 0].index, inplace=True)
+        if np.array(self.inventoryList.loc[self.inventoryList.ISBN==isbn, 'Quantity'])[0]>=num:
+            self.inventoryList.loc[self.inventoryList.ISBN == isbn, 'Quantity'] -= num
+        self.save2file()
     # print detail
-    def printDetailInfo(self):
-        inventory_Book_List = pd.merge(self.inventoryList, self.bookList, on='BookId')
+    def print(self):
+        inventory_Book_List = self.bookList.merge(self.inventoryList,  on='ISBN')
+        print("########### Welcome to Inventory List###################")
         print(inventory_Book_List)
+        print("########################################################")

@@ -1,31 +1,33 @@
+import pandas as pd
+import numpy as np
+from Cart import Cart
+
 class Customer:
-    def __init__(self, cardnumber, streetnumber,streetname, zip):
-        self.Username = None
+    customerList=None
+    def __init__(self, username):
+        self.Username = username
         self.Password = None
-        self.ShoppingCart = None
-        self.CardNumber = cardnumber
-        self.StreetNumber = streetnumber
-        self.StreetName = streetname
-        self.Zip = zip
-        self.Orders = None
-    # takes ISBN number, finds corresponding book in inventory, and adds to shopping cart, adjusts inventory number.
-    # If ISBN not in inventory will quit
-    def AddToCart(self, ISBN):
-        pass
-    # takes ISBN, finds corresponding book in shopping cart, removes from shopping cart, adjusts inventory number.
-    # If ISBN not in shopping cart will quit
-    def RemoveFromCart(self,ISBN):
-        pass
+        self.ShoppingCart = Cart(username)
+        self.CardNumber=None
+        self.StreetNumber=None
+        self.StreetName=None
+        self.Zip=zip
+        self.Orders=None
+        self.file = 'customer.csv'
+        self.customerList = pd.read_csv(self.file)
+        # takes ISBN number, finds corresponding book in inventory, and adds to shopping cart, adjusts inventory number.
+
     # returns books in shopping cart
     def GetCart(self):
-        pass
+        return self.ShoppingCart
     # takes string or ints for address and zipcode, converts into int for number, string for street, and int for zipcode.
     # If error will quit and report incorrect submission to user. If no error, sets address and zipcode
+    # return void
     def SetAddress(self, Street, Number, Address, ZipCode):
         pass
     # returns address of customer in string format
     def GetAddress(self):
-        return self.StreetName + self.StreetName
+        return self.StreetName+self.StreetName
     # takes string of numbers,
     # if incorrect length or not an int, will return back to user error message,
     # if not, will set cardnumber
@@ -34,10 +36,6 @@ class Customer:
     # return cardnumber as int
     def GetCardNumber(self):
         return self.CardNumber
-    # calls Cart.makeorder() which makes an new Order and prints a document
-    # returns the new order ID which will be added to the user’s orders array
-    def Checkout(self):
-        pass
     # return user name
     def GetUsername(self):
         return self.Username
@@ -48,10 +46,29 @@ class Customer:
     def GetPassword(self):
         return self.Password
     # will remove all orders, inventory of user’s
-    def DeleteAccount(self):
-        pass
+    def DeleteAccount(self, order):
+        self.customerList = self.customerList.drop(self.customerList[self.customerList['user'] == self.Username].index)
+        order.remove(self.Username)
+        self.Save2File()
+        exit()
     # return void
     def Logout(self):
-        pass
-
-
+        exit()
+    # check user registered
+    def IsMember(self):
+        if self.Username in np.array(self.customerList['user']):
+            self.SetPassword(np.array(self.customerList.loc[self.customerList[self.customerList['user'] == self.Username].index]['password']))
+            return False
+        else:
+            return True
+    def addMember(self, username, password):
+        new_row = pd.Series({"user": username, "password": password})
+        self.customerList = self.customerList.append(new_row, ignore_index=True)
+        self.Save2File()
+    def IsRightPassword(self, password):
+        if self.Password ==password:
+            return True
+        else:
+            return False
+    def Save2File(self):
+        self.customerList.to_csv(self.file, encoding='utf-8', index=False)
