@@ -11,7 +11,7 @@ while not verify:
     customer = Customer(username)
     if customer.IsMember(): # check to see if user does not exists
         yesno = input("Not a registered user! Do you want to register (Y/n) ? ")
-        if yesno=='y':
+        if yesno.lower() =='y':
             password = input("Password: ")
             conf_password = input("Confirm Password:")
             if password != conf_password:
