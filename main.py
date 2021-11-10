@@ -3,7 +3,6 @@ import numpy as np
 from Inventory import Inventory
 from Customer import Customer
 from Order import Order
-
 ## username and password input for verify
 verify = False
 while not verify:
@@ -11,7 +10,7 @@ while not verify:
     #############################Create Customer Object
     customer = Customer(username)
     if customer.IsMember(): # check to see if user does not exists
-        yesno = input("not registered user! Do you want to register (Y/n) ? ")
+        yesno = input("Not a registered user! Do you want to register (Y/n) ? ")
         if yesno=='y':
             password = input("Password: ")
             conf_password = input("Confirm Password:")
@@ -24,7 +23,7 @@ while not verify:
         else:
             break
     else:
-        password = input("What is the password?>>")
+        password = input("Password: ")
         if customer.IsRightPassword(password):
             print("User has been identified, Welcome", username)
             verify = True
