@@ -66,7 +66,7 @@ class Customer:
         self.customerList = self.customerList.append(new_row, ignore_index=True)
         self.Save2File()
     def IsRightPassword(self, password):
-        if self.Password ==password:
+        if self.Password == password:
             return True
         else:
             return False
