@@ -43,13 +43,13 @@ if verify:
         # the user can see cart information, Delete account, Log out.
         cdl = input("Edit Cart(C), Delete account(D), Log Out(L), View Order(V) :")
 
-        if cdl=='L':
+        if cdl.lower()=='L':
             customer.Logout()
-        elif cdl=='D':
+        elif cdl.lower()=='D':
             customer.DeleteAccount(order)
-        elif cdl=='V':
+        elif cdl.lower()=='V':
             order.print()
-        elif cdl == 'C':
+        elif cdl.lower() == 'C':
             cart = customer.GetCart()
             cart_edit = True
             while cart_edit:
