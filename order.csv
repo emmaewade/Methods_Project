@@ -1,1 +1,1 @@
-user,ISBN,Quantity,Datetime
+CardNumber,user,ISBN,Quantity,Price,Datetime

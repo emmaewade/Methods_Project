@@ -3,6 +3,7 @@ import numpy as np
 from Inventory import Inventory
 from Customer import Customer
 from Order import Order
+
 ## username and password input for verify
 verify = False
 while not verify:
@@ -25,12 +26,12 @@ while not verify:
     else:
         password = input("Password: ")
         if customer.IsRightPassword(password):
-            print("   User has been identified, Welcome", username)
+            print("---------User has been identified, Welcome", username)
             verify = True
         else:
             print("Wrong Password, Try Again!")
 
-##===================Verfied
+##===================Verified
 if verify:
     ######################Create Inventory Object
     inventory = Inventory()
@@ -42,8 +43,8 @@ if verify:
     while(1):
         # the user can see cart information, Delete account, Log out.
         cdl = input("Edit Cart(C), Delete account(D), Log Out(L), View Order(V) :")
+
         if cdl.lower()=='l':
-            print("Goodbye! See you soon, {}".format(username))
             customer.Logout()
         elif cdl.lower()=='d':
             customer.DeleteAccount(order)
@@ -52,25 +53,28 @@ if verify:
         elif cdl.lower() == 'c':
             cart = customer.GetCart()
             cart_edit = True
-        else:
-            print("Please select within the choices.")
-            cart_edit = True
-            # read card information
-        while cart_edit:
-            print(cart.print())
-            adcb = input("Cart add(a), delete(d) by ISBN number, Checkout(c), Go Back(b):")
-            if adcb.lower()=='a':
-                isbn = input("Input ISBN number:")
-                quantity = input("Number of items:")
-                # cart list
-                cart.AddToCart(isbn, quantity)
-            if adcb.lower()=='d':
-                isbn = input("Input ISBN number:")
-                cart.RemoveFromCart(isbn)
-            if adcb.lower()=='c':
-                cart.checkout(inventory, order)
-                inventory.print()
-            if adcb.lower()=='b':
-                cart_edit = False
-    
+            while cart_edit:
+                # read card information
+                cart.print()
+                adcb = input("Cart add(a), delete(d) by ISBN number, Checkout(c), Go Back(b):")
+                if adcb.lower()=='a':
+                    isbn = input("Input ISBN number:")
+                    quantity = input("Number of items:")
+                    # cart list
+                    if inventory.checkQuantity(isbn, quantity)==1:
+                        cart.AddToCart(isbn, quantity)
+                    elif inventory.checkQuantity(isbn, quantity)==0:
+                        print('Inventory doesn\'t have enough quantity. Only {items} items left.'.format(items = quantity))
+                        continue
+                    elif inventory.checkQuantity(isbn, quantity)==-1:
+                        print('Invalid ISBN number.')
+                        continue
+                if adcb.lower()=='d':
+                    isbn = input("Input ISBN number:")
+                    cart.RemoveFromCart(isbn)
+                if adcb.lower()=='c':
+                    cart.checkout(inventory, order)
+                if adcb.lower()=='b':
+                    cart_edit = False
+            
 

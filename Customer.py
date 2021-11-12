@@ -1,7 +1,7 @@
+# to store login information, account editing, shopping cart
 import pandas as pd
 import numpy as np
 from Cart import Cart
-
 class Customer:
     customerList=None
     def __init__(self, username):
@@ -21,16 +21,11 @@ class Customer:
     def GetCart(self):
         return self.ShoppingCart
     # takes string or ints for address and zipcode, converts into int for number, string for street, and int for zipcode.
-    # If error will quit and report incorrect submission to user. If no error, sets address and zipcode
-    # return void
     def SetAddress(self, Street, Number, Address, ZipCode):
         pass
     # returns address of customer in string format
     def GetAddress(self):
         return self.StreetName+self.StreetName
-    # takes string of numbers,
-    # if incorrect length or not an int, will return back to user error message,
-    # if not, will set cardnumber
     def SetCardNumber(self,Number):
         self.CardNumber = Number
     # return cardnumber as int

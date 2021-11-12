@@ -7,8 +7,8 @@ class Order:
         self.file='order.csv'
         self.orderList = pd.read_csv(self.file)
 
-    def addNewOrder(self, isbn, quantity):
-        new_row = pd.Series({"user": self.Username, "ISBN": isbn, "Quantity": quantity,
+    def addNewOrder(self, cardnumber, isbn, quantity):
+        new_row = pd.Series({"CardNumber":cardnumber,"user": self.Username, "ISBN": isbn, "Quantity": quantity,
                              "Datetime": datetime.today().strftime('%Y-%m-%d-%H:%M:%S')})
         self.orderList = self.orderList.append(new_row, ignore_index=True)
     def remove(self, user):
