@@ -10,6 +10,7 @@ class Inventory:
         # read  file
         self.inventoryList = pd.read_csv(self.filename1)
         self.bookList = pd.read_csv(self.filename2)
+        
     def save2file(self):
         self.inventoryList.to_csv(self.filename1, encoding='utf-8', index=False)
     # default adds 1, checks to see if input is int, if not returns error message
@@ -26,7 +27,7 @@ class Inventory:
         self.save2file()
     # print detail
     def print(self):
-        inventory_Book_List = self.bookList.merge(self.inventoryList,  on='ISBN')
+        inventory_Book_List = self.bookList.merge(self.inventoryList,  on='BookId')
         print("########### Welcome to Inventory List###################")
         print(inventory_Book_List)
         print("########################################################")

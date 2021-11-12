@@ -43,6 +43,7 @@ if verify:
         # the user can see cart information, Delete account, Log out.
         cdl = input("Edit Cart(C), Delete account(D), Log Out(L), View Order(V) :")
         if cdl.lower()=='l':
+            print("Goodbye! See you soon, {}".format(username))
             customer.Logout()
         elif cdl.lower()=='d':
             customer.DeleteAccount(order)
@@ -51,22 +52,25 @@ if verify:
         elif cdl.lower() == 'c':
             cart = customer.GetCart()
             cart_edit = True
-            while cart_edit:
-                # read card information
-                print(cart.print())
-                adcb = input("Cart add(a), delete(d) by ISBN number, Checkout(c), Go Back(b):>>")
-                if adcb.lower()=='a':
-                    isbn = input("Input ISBN number:")
-                    quantity = input("Input the number:")
-                    # cart list
-                    cart.AddToCart(isbn, quantity)
-                if adcb.lower()=='d':
-                    isbn = input("Input ISBN number:")
-                    cart.RemoveFromCart(isbn)
-                if adcb.lower()=='c':
-                    cart.checkout(inventory, order)
-                    inventory.print()
-                if adcb.lower()=='b':
-                    cart_edit = False
-        
+        else:
+            print("Please select within the choices.")
+            cart_edit = True
+            # read card information
+        while cart_edit:
+            print(cart.print())
+            adcb = input("Cart add(a), delete(d) by ISBN number, Checkout(c), Go Back(b):")
+            if adcb.lower()=='a':
+                isbn = input("Input ISBN number:")
+                quantity = input("Number of items:")
+                # cart list
+                cart.AddToCart(isbn, quantity)
+            if adcb.lower()=='d':
+                isbn = input("Input ISBN number:")
+                cart.RemoveFromCart(isbn)
+            if adcb.lower()=='c':
+                cart.checkout(inventory, order)
+                inventory.print()
+            if adcb.lower()=='b':
+                cart_edit = False
+    
 
