@@ -1,7 +1,7 @@
 # for functions to add items, delete items, and checkout, boolean for checked out?
 from datetime import datetime
 import pandas as pd
-
+from Inventory import *
 class Cart:
     def __init__(self, username):
         self.Username = username
@@ -28,7 +28,7 @@ class Cart:
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
             inventory.removeQuantity(isbn, quantity)
-            order.addNewOrder(self.CardNumber, isbn, quantity)
+            order.addQuantity(self.CardNumber, isbn, quantity)
 
         self.check = True
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity'], dtype=object)

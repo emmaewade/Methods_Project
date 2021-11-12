@@ -56,7 +56,7 @@ if verify:
             while cart_edit:
                 # read card information
                 cart.print()
-                adcb = input("Cart add(a), delete(d) by ISBN number, Checkout(c), Go Back(b):")
+                adcb = input("Cart add(a), delete(d) by ISBN number, Checkout(c), Go Back(b), View Cart(v):")
                 if adcb.lower()=='a':
                     isbn = input("Input ISBN number:")
                     quantity = input("Number of items:")
@@ -64,7 +64,7 @@ if verify:
                     if inventory.checkQuantity(isbn, quantity)==1:
                         cart.AddToCart(isbn, quantity)
                     elif inventory.checkQuantity(isbn, quantity)==0:
-                        print('Inventory doesn\'t have enough quantity. Only {items} items left.'.format(items = quantity))
+                        print('Inventory doesn\'t have enough quantity.')
                         continue
                     elif inventory.checkQuantity(isbn, quantity)==-1:
                         print('Invalid ISBN number.')
@@ -74,7 +74,11 @@ if verify:
                     cart.RemoveFromCart(isbn)
                 if adcb.lower()=='c':
                     cart.checkout(inventory, order)
+                if adcb.lower() == 'u':
+                    inventory.print()
+                if adcb.lower() == 'v':
+                    cart.print()
                 if adcb.lower()=='b':
                     cart_edit = False
-            
+                
 
