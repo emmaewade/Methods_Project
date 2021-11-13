@@ -40,3 +40,5 @@ class Cart:
             print("#######Cart List################")
             print(self.goodList)
             print('################################')
+        if len(self.goodList) == 0:
+            print("\n-------------------------Cart is Empty-----------------------")
