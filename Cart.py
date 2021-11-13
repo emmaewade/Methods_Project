@@ -1,7 +1,9 @@
 # for functions to add items, delete items, and checkout, boolean for checked out?
 from datetime import datetime
 import pandas as pd
-from Inventory import *
+from pandas.core.dtypes.missing import notnull
+from Inventory import Inventory
+from Order import Order
 class Cart:
     def __init__(self, username):
         self.Username = username
@@ -28,7 +30,7 @@ class Cart:
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
             inventory.removeQuantity(isbn, quantity)
-            order.addQuantity(self.CardNumber, isbn, quantity)
+            Inventory.addQuantity(self.CardNumber, isbn, quantity)
 
         self.check = True
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity'], dtype=object)
@@ -36,9 +38,9 @@ class Cart:
     def isCheck(self):
         return self.check
     def print(self):
-        if len(self.goodList):
+        if len(self.goodList) > 0:
             print("#######Cart List################")
             print(self.goodList)
             print('################################')
-        if len(self.goodList) == 0:
+        else:
             print("\n-------------------------Cart is Empty-----------------------")
