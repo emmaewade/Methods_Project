@@ -26,11 +26,12 @@ class Cart:
     # makes an new Order and prints a document
     # returns the new order ID which will be added to the user’s orders array
     def checkout(self, inventory, order):
+        len(self.goodList.index)
         for i in range(len(self.goodList.index)):
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
             inventory.removeQuantity(isbn, quantity)
-            Inventory.addQuantity(self.CardNumber, isbn, quantity)
+            order.addQuantity(self.CardNumber, isbn, quantity)
 
         self.check = True
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity'], dtype=object)
@@ -39,7 +40,7 @@ class Cart:
         return self.check
     def print(self):
         if len(self.goodList) > 0:
-            print("#######Cart List################")
+            print("\n#######Cart List################")
             print(self.goodList)
             print('################################')
         else:
