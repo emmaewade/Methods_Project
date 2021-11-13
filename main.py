@@ -32,7 +32,7 @@ while not verify:
             verify = True
         else:
             print("Wrong Password, Try Again!")
-
+        # print(customer.GetAddress())
 ##===================Verified
 if verify:
     ######################Create Inventory Object
@@ -59,7 +59,7 @@ if verify:
             while cart_edit:
                 # read card information
                 cart.print()
-                adcb = input("\nAdd to Cart(a)\nDelete(d) by ISBN number\nCheckout(c)\nGo Back(b)\nView Cart(v):")
+                adcb = input("\nAdd to Cart(a)\nDelete(d) by ISBN number\nCheckout(c)\nGo Back(b)\nView Cart(v)\nEdit Address(e):")
                 if adcb.lower()=='a':
                     isbn = input("\nInput ISBN number:")
                     quantity = input("Number of items:")
@@ -73,15 +73,24 @@ if verify:
                         print('Invalid ISBN number.')
                         continue
                 if adcb.lower()=='d':
-                    isbn = input("Input ISBN number:")
+                    isbn = input("\nInput ISBN number:")
                     cart.RemoveFromCart(isbn)
-                if adcb.lower()=='c':
+                elif adcb.lower()=='c':
                     cart.checkout(inventory, order)
-                if adcb.lower() == 'u':
+                elif adcb.lower() == 'u':
                     inventory.print()
-                if adcb.lower() == 'v':
+                elif adcb.lower() == 'v':
                     cart.print()
-                if adcb.lower()=='b':
+                elif adcb.lower() == 'e':
+                    customer.print()
+                    streetName = input("Input Street Name or exit(e): ")
+                    if streetName == 'e':
+                        continue
+                    streetNumber = input("Input Street Number: ")
+                    zipcode = input("Zipcode: ")
+                    customer.SetAddress(streetName, streetNumber, zipcode)
+                elif adcb.lower()=='b':
                     cart_edit = False
-                
+                else: 
+                    print("Please select from the options below:")
 

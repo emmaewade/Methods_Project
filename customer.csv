@@ -1,7 +1,7 @@
-user,password
-test,test
-test1,test1
-noob,Cool123
-test2,hailstate
-jerseysmike,steak
-marty,marty12!
+user,password,StreetName,StreetNumber,Zip
+test,test,Womack Street,208,39759
+test1,test1,womack rd,123,39759
+noob,Cool123,abc rd,111,77045
+test2,hailstate,xyz,2323,8943
+jerseysmike,steak,asdf,2121,9382
+marty,marty12!,fdsa,3456,3256

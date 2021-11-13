@@ -20,4 +20,4 @@ class Order:
         if len(self.orderList) > 0:
             print(self.orderList.loc[self.orderList.index[self.orderList['user'] == self.Username]])
         else: 
-            print("\n-----------------------------No orders yet--------------------------")
+            print("\n-----------------------------No orders yet--------------------")

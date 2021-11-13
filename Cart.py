@@ -30,8 +30,8 @@ class Cart:
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
             inventory.removeQuantity(isbn, quantity)
-            order.addQuantity(self.CardNumber, isbn, quantity)
-
+            order.addNewOrder(self.CardNumber, isbn, quantity)
+            
         self.check = True
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity'], dtype=object)
         order.save2file()
