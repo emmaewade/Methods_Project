@@ -1,7 +1,6 @@
 # for functions to add items, delete items, and checkout, boolean for checked out?
 from datetime import datetime
 import pandas as pd
-from pandas.core.dtypes.missing import notnull
 from Inventory import Inventory
 from Order import Order
 class Cart:

@@ -6,7 +6,9 @@ from Order import Order
 
 ## username and password input for verify
 verify = False
+welcome_message = "WELCOME TO G8-BOOKSHOP"
 while not verify:
+    print("\n------------------------{welcome_msg}-------------------------\n".format(welcome_msg = welcome_message))
     username = input("UserName: ")
     #############################Create Customer Object
     customer = Customer(username)
@@ -26,7 +28,7 @@ while not verify:
     else:
         password = input("Password: ")
         if customer.IsRightPassword(password):
-            print("---------User has been identified, Welcome", username)
+            print("\n-----------------User has been identified, Welcome! {user} \n".format(user = username.upper()))
             verify = True
         else:
             print("Wrong Password, Try Again!")

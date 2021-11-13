@@ -17,4 +17,7 @@ class Order:
     def save2file(self):
         self.orderList.to_csv(self.file, encoding='utf-8', index=False)
     def print(self):
-        print(self.orderList.loc[self.orderList.index[self.orderList['user'] == self.Username]])
+        if len(self.orderList) > 0:
+            print(self.orderList.loc[self.orderList.index[self.orderList['user'] == self.Username]])
+        else: 
+            print("\n-----------------------------No orders yet--------------------------")
