@@ -29,11 +29,22 @@ class Inventory:
             return 1
         else:
             return 0
+        
+    def getPrice(self, isbn):
+        
+        #self.bookList.loc[self.bookList.ISBN == isbn]
+        
+        if len(self.bookList.loc[self.bookList.ISBN == isbn, 'Price'])==0:
+            return -1 ##better failsafe??
+        else:
+            return np.array(self.bookList.loc[self.bookList.ISBN == isbn, 'Price'])[0]
+        
     # print detail
     def print(self):
         inventory_Book_List = self.bookList.merge(self.inventoryList,  on='ISBN')
         print("########### Welcome to Inventory List###################")
         print(inventory_Book_List)
         print("########################################################")
+        
     def save2file(self):
         self.inventoryList.to_csv(self.filename1, encoding='utf-8', index=False)

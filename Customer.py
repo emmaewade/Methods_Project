@@ -7,13 +7,13 @@ class Customer:
     def __init__(self, username):
         self.Username = username
         self.Password = None
-        self.file = 'customer.csv'
         self.ShoppingCart = Cart(username)
         self.CardNumber=None
         self.StreetNumber=None
-        self.StreetName= None
-        self.ZipCode=zip
+        self.StreetName=None
+        self.Zip=zip
         self.Orders=None
+        self.file = 'customer.csv'
         self.customerList = pd.read_csv(self.file)
         # takes ISBN number, finds corresponding book in inventory, and adds to shopping cart, adjusts inventory number.
 
@@ -21,19 +21,11 @@ class Customer:
     def GetCart(self):
         return self.ShoppingCart
     # takes string or ints for address and zipcode, converts into int for number, string for street, and int for zipcode.
-    def SetAddress(self, Street, Number, ZipCode):
-        self.StreetName=Street
-        self.StreetNumber= Number
-        self.Zip = ZipCode
-        self.customerList.loc[self.customerList['user'] == self.Username, 'StreetName'] = Street
-        self.customerList.loc[self.customerList['user'] == self.Username, 'StreetNumber'] = Number
-        self.customerList.loc[self.customerList['user'] == self.Username, 'Zip'] = ZipCode
-        self.Save2File()
-        self.print()
+    def SetAddress(self, Street, Number, Address, ZipCode):
+        pass
     # returns address of customer in string format
     def GetAddress(self):
-        # self.StreetAddress = self.StreetAddress.loc[self.StreetAddress.index[self.StreetAddress['user']  
-        return  self.StreetName + self.StreetNumber + self.Zip
+        return self.StreetName+self.StreetName
     def SetCardNumber(self,Number):
         self.CardNumber = Number
     # return cardnumber as int
@@ -75,5 +67,3 @@ class Customer:
             return False
     def Save2File(self):
         self.customerList.to_csv(self.file, encoding='utf-8', index=False)
-    def print(self):
-        print(self.customerList.loc[self.customerList.index[self.customerList['user'] == self.Username]])

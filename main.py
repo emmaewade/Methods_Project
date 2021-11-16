@@ -21,6 +21,7 @@ while not verify:
                 print("Password did not match")  # print a message if different inputs
                 continue  # restarts
             else:
+                address = input("Enter address:")
                 customer.addMember(username, password)
                 verify = True
         else:
@@ -32,7 +33,7 @@ while not verify:
             verify = True
         else:
             print("Wrong Password, Try Again!")
-        # print(customer.GetAddress())
+
 ##===================Verified
 if verify:
     ######################Create Inventory Object
@@ -43,23 +44,27 @@ if verify:
     inventory.print()
 
     while(1):
+        
         # the user can see cart information, Delete account, Log out.
         print("\nPlease select from options below:\n")
-        cdl = input("Lookup Cart(c)\nDelete account(d)\nLog Out(l)\nView Order(v):")
+        cdl = input("View/Edit Cart(c)\nManage account(m)\nLog Out(l)\nView Order(v)\nView Inventory(i):")
 
         if cdl.lower()=='l':
             customer.Logout()
-        elif cdl.lower()=='d':
-            customer.DeleteAccount(order)
         elif cdl.lower()=='v':
             order.print()
+        elif cdl.lower() == "i":
+            inventory.print()
+        elif cdl.lower()=='m':
+            
+            adcb = input()
+            customer.DeleteAccount(order)
         elif cdl.lower() == 'c':
             cart = customer.GetCart()
             cart_edit = True
             while cart_edit:
                 # read card information
-                cart.print()
-                adcb = input("\nAdd to Cart(a)\nDelete(d) by ISBN number\nCheckout(c)\nGo Back(b)\nView Cart(v)\nEdit Address(e):")
+                adcb = input("\nAdd to Cart(a)\nDelete(d) by ISBN number\nCheckout(c)\nGo Back(b)\nView Cart(v):\nView Inventory(i)")
                 if adcb.lower()=='a':
                     isbn = input("\nInput ISBN number:")
                     quantity = input("Number of items:")
@@ -73,24 +78,18 @@ if verify:
                         print('Invalid ISBN number.')
                         continue
                 if adcb.lower()=='d':
-                    isbn = input("\nInput ISBN number:")
+                    isbn = input("Input ISBN number:")
                     cart.RemoveFromCart(isbn)
-                elif adcb.lower()=='c':
+                if adcb.lower()=='c':
                     cart.checkout(inventory, order)
-                elif adcb.lower() == 'u':
+                if adcb.lower() == 'u':
                     inventory.print()
-                elif adcb.lower() == 'v':
+                if adcb.lower() == 'v':
                     cart.print()
-                elif adcb.lower() == 'e':
-                    customer.print()
-                    streetName = input("Input Street Name or exit(e): ")
-                    if streetName == 'e':
-                        continue
-                    streetNumber = input("Input Street Number: ")
-                    zipcode = input("Zipcode: ")
-                    customer.SetAddress(streetName, streetNumber, zipcode)
-                elif adcb.lower()=='b':
+                if adcb.lower()=='b':
                     cart_edit = False
-                else: 
-                    print("Please select from the options below:")
+                if adcb.lower() == 'i'
+                    inventory.print()
+                    
+                
 

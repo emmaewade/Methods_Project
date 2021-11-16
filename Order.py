@@ -7,9 +7,9 @@ class Order:
         self.file='order.csv'
         self.orderList = pd.read_csv(self.file)
 
-    def addNewOrder(self, cardnumber, isbn, quantity):
+    def addNewOrder(self, cardnumber, isbn, quantity, price):
         new_row = pd.Series({"CardNumber":cardnumber,"user": self.Username, "ISBN": isbn, "Quantity": quantity,
-                             "Datetime": datetime.today().strftime('%Y-%m-%d-%H:%M:%S')})
+                             "Price":price, "Datetime": datetime.today().strftime('%Y-%m-%d-%H:%M:%S')})
         self.orderList = self.orderList.append(new_row, ignore_index=True)
     def remove(self, user):
         self.orderList.drop(self.orderList.index[self.orderList['user'] == user], inplace=True)
@@ -20,4 +20,4 @@ class Order:
         if len(self.orderList) > 0:
             print(self.orderList.loc[self.orderList.index[self.orderList['user'] == self.Username]])
         else: 
-            print("\n-----------------------------No orders yet--------------------")
+            print("\n-----------------------------No orders yet--------------------------")
