@@ -34,17 +34,21 @@ class Cart:
     # returns the new order ID which will be added to the user’s orders array
     def checkout(self, inventory, order):
         
-        len(self.goodList.index)
+        if (len(self.goodList.index) == 0):
+            print("Cart empty - can't checkout")
+            return
         for i in range(len(self.goodList.index)):
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
             price = int(self.goodList.loc[i].Price)
             inventory.removeQuantity(isbn, quantity)
             order.addNewOrder(self.CardNumber, isbn, quantity, price)
-
+            
         self.check = True
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity'], dtype=object)
         order.save2file()
+        
+        print("\n------Checkout Successful------")
         
     def isCheck(self):
         return self.check

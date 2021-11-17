@@ -47,7 +47,7 @@ if verify:
         
         # the user can see cart information, Delete account, Log out.
         print("\nPlease select from options below:\n")
-        cdl = input("View/Edit Cart(c)\nManage account(m)\nLog Out(l)\nView Order(v)\nView Inventory(i):")
+        cdl = input("View/Edit Cart(c)\nManage account(m)\nLog Out(l)\nView Order(v)\nView Inventory(i):\n")
 
         if cdl.lower()=='l':
             customer.Logout()
@@ -64,7 +64,7 @@ if verify:
             cart_edit = True
             while cart_edit:
                 # read card information
-                adcb = input("\nAdd to Cart(a)\nDelete(d) by ISBN number\nCheckout(c)\nGo Back(b)\nView Cart(v):\nView Inventory(i)")
+                adcb = input("\nAdd to Cart(a)\nDelete(d) by ISBN number\nCheckout(c)\nGo Back(b)\nView Cart(v)\nView Inventory(i):\n")
                 if adcb.lower()=='a':
                     isbn = input("\nInput ISBN number:")
                     quantity = input("Number of items:")
@@ -88,7 +88,7 @@ if verify:
                     cart.print()
                 if adcb.lower()=='b':
                     cart_edit = False
-                if adcb.lower() == 'i'
+                if adcb.lower() == 'i':
                     inventory.print()
                     
                 
