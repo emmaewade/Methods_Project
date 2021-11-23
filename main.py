@@ -7,6 +7,7 @@ from Order import Order
 ## username and password input for verify
 verify = False
 welcome_message = "WELCOME TO G8-BOOKSHOP"
+account_info = "Account Information"
 while not verify:
     print("\n------------------------{welcome_msg}-------------------------\n".format(welcome_msg = welcome_message))
     username = input("UserName: ")
@@ -23,7 +24,23 @@ while not verify:
             else:
                 customer.addMember(username, password)
                 verify = True
+                print("\n------------------------{account_information}-------------------------\n".format(account_information = account_info))
+                print("Name: ")
+                firstname = input("First Name: ")
+                lastname = input("Last Name: ")
+                customer.SetName(firstname, lastname)
+                print("Welcome ", firstname, lastname)
+                print("Please enter your address:")
+                Street = input("Street Name: ")
+                add_number = input("Address number: ")
+                city = input("City: ")
+                state = input("State: ")
+                zip = input ("Zip: ")
+                customer.SetAddress(Street, add_number, city, state, zip)
+
+
         else:
+            print ("Invalid input.")
             break
     else:
         password = input("Password: ")
@@ -45,7 +62,7 @@ if verify:
     while(1):
         # the user can see cart information, Delete account, Log out.
         print("\nPlease select from options below:\n")
-        cdl = input("Lookup Cart(c)\nDelete account(d)\nLog Out(l)\nView Order(v):")
+        cdl = input("Manage Account (a)\nLookup Cart(c)\nDelete account(d)\nLog Out(l)\nView Order(v):")
 
         if cdl.lower()=='l':
             customer.Logout()
@@ -53,6 +70,31 @@ if verify:
             customer.DeleteAccount(order)
         elif cdl.lower()=='v':
             order.print()
+        elif cdl.lower()=='a':
+            print("\n------------------------{account_information}-------------------------\n".format(account_information = account_info))
+
+            print("MENU: ")
+            account_option = input("(E) Edit account information \n(O) View Order History\n (B) Go Back \n")
+            account_edit = True
+            while account_edit:
+                if account_option.lower()=='e':
+                    firstname = input("Update First Name: ")
+                    lastname = input("Update Last Name: ")
+                    customer.SetName(firstname, lastname)
+                    streetNumber = input("Update Street Number: ")
+                    streetName = input("Update Street Name: ")
+                    city = input("Update city: ")
+                    state = input("Update state: ")
+                    zip = input("Update zip: ")
+                    customer.SetAddress(streetName, streetNumber, city, state, zip)
+                    print("Account Information updated.")
+                    account_edit = False
+                elif account_option.lower()=='o':
+                    order.print()
+                    account_edit = False
+                elif account_option.lower()=='b':
+                    account_edit = False
+
         elif cdl.lower() == 'c':
             cart = customer.GetCart()
             cart_edit = True

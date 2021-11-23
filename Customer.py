@@ -7,11 +7,15 @@ class Customer:
     def __init__(self, username):
         self.Username = username
         self.Password = None
+        self.FirstName = None
+        self.LastName = None
         self.file = 'customer.csv'
         self.ShoppingCart = Cart(username)
         self.CardNumber=None
         self.StreetNumber=None
         self.StreetName= None
+        self.City = None
+        self.State = None
         self.ZipCode=zip
         self.Orders=None
         self.customerList = pd.read_csv(self.file)
@@ -21,21 +25,28 @@ class Customer:
     def GetCart(self):
         return self.ShoppingCart
     # takes string or ints for address and zipcode, converts into int for number, string for street, and int for zipcode.
-    def SetAddress(self, Street, Number, ZipCode):
+    def SetAddress(self, Street, Number, City, State, ZipCode):
         self.StreetName=Street
         self.StreetNumber= Number
         self.Zip = ZipCode
         self.customerList.loc[self.customerList['user'] == self.Username, 'StreetName'] = Street
         self.customerList.loc[self.customerList['user'] == self.Username, 'StreetNumber'] = Number
+        self.customerList.loc[self.customerList['user'] == self.Username, 'City'] = City
+        self.customerList.loc[self.customerList['user'] == self.Username, 'State'] = State
         self.customerList.loc[self.customerList['user'] == self.Username, 'Zip'] = ZipCode
         self.Save2File()
         self.print()
     # returns address of customer in string format
     def GetAddress(self):
         # self.StreetAddress = self.StreetAddress.loc[self.StreetAddress.index[self.StreetAddress['user']  
-        return  self.StreetName + self.StreetNumber + self.Zip
+        return  self.StreetName + self.StreetNumber + self.City + self.State + self.Zip
     def SetCardNumber(self,Number):
         self.CardNumber = Number
+    def SetName(self, firstname, lastname):
+        self.FirstName = firstname
+        self.LastName = lastname
+        self.customerList.loc[self.customerList['user'] == self.Username, 'First'] = firstname
+        self.customerList.loc[self.customerList['user'] == self.Username, 'Last'] = lastname
     # return cardnumber as int
     def GetCardNumber(self):
         return self.CardNumber
