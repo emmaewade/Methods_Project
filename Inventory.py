@@ -10,10 +10,17 @@ class Inventory:
         self.inventoryList = pd.read_csv(self.filename1)
         self.bookList = pd.read_csv(self.filename2)
     # default adds 1, checks to see if input is int, if not returns error message
+
+    def getQuantity(self, quantity):
+        num = self.bookList.loc[self.bookList.Quantity == quantity, "Quantity"]
+        return num
+
     def addQuantity(self, isbn, num=1):
         self.inventoryList.loc[self.inventoryList.ISBN==isbn, 'Quantity']+=num
         self.save2file()
     # num defaults 1, checks to see if input is int, if not returns error message
+
+
     def removeQuantity(self, isbn, num=1):
         self.inventoryList.loc[self.inventoryList.ISBN == isbn, 'Quantity'] -= num
         self.save2file()
@@ -29,6 +36,16 @@ class Inventory:
             return 1
         else:
             return 0
+
+    def getPrice(self, isbn):
+
+        # self.bookList.loc[self.bookList.ISBN == isbn]
+
+        if len(self.bookList.loc[self.bookList.ISBN == isbn, 'Price']) == 0:
+            return -1  ##better failsafe??
+        else:
+            return np.array(self.bookList.loc[self.bookList.ISBN == isbn, 'Price'])[0]
+
     # print detail
     def print(self):
         inventory_Book_List = self.bookList.merge(self.inventoryList,  on='ISBN')

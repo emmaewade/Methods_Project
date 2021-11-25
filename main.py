@@ -8,6 +8,7 @@ from Order import Order
 verify = False
 welcome_message = "WELCOME TO G8-BOOKSHOP"
 account_info = "Account Information"
+ordernumber = 1
 while not verify:
     print("\n------------------------{welcome_msg}-------------------------\n".format(welcome_msg = welcome_message))
     username = input("UserName: ")
@@ -25,14 +26,14 @@ while not verify:
                 customer.addMember(username, password)
                 verify = True
                 print("\n------------------------{account_information}-------------------------\n".format(account_information = account_info))
-                print("Name: ")
-                firstname = input("First Name: ")
-                lastname = input("Last Name: ")
+                print("Creating Account")
+                firstname = input("Please enter your First Name: ")
+                lastname = input("Please enter your Last Name: ")
                 customer.SetName(firstname, lastname)
                 print("Welcome ", firstname, lastname)
-                print("Please enter your address:")
-                Street = input("Street Name: ")
+                print("Please enter your shipping address:")
                 add_number = input("Address number: ")
+                Street = input("Street Name: ")
                 city = input("City: ")
                 state = input("State: ")
                 zip = input ("Zip: ")
@@ -62,37 +63,48 @@ if verify:
     while(1):
         # the user can see cart information, Delete account, Log out.
         print("\nPlease select from options below:\n")
-        cdl = input("Manage Account (a)\nLookup Cart(c)\nDelete account(d)\nLog Out(l)\nView Order(v):")
+        cdl = input("(A) Manage Account \n(C) Cart Options \n(I) View Inventory\n(L) Log Out\n(V) View Order History\n>>")
 
         if cdl.lower()=='l':
             customer.Logout()
-        elif cdl.lower()=='d':
-            customer.DeleteAccount(order)
         elif cdl.lower()=='v':
             order.print()
+        elif cdl.lower()=='i':
+            inventory.print()
         elif cdl.lower()=='a':
             print("\n------------------------{account_information}-------------------------\n".format(account_information = account_info))
 
             print("MENU: ")
-            account_option = input("(E) Edit account information \n(O) View Order History\n (B) Go Back \n")
+            account_option = input("(E) Edit account information \n(O) View Order History\n(D) Delete Account\n(B) Go Back \n>>")
             account_edit = True
             while account_edit:
+
                 if account_option.lower()=='e':
-                    firstname = input("Update First Name: ")
-                    lastname = input("Update Last Name: ")
-                    customer.SetName(firstname, lastname)
-                    streetNumber = input("Update Street Number: ")
-                    streetName = input("Update Street Name: ")
-                    city = input("Update city: ")
-                    state = input("Update state: ")
-                    zip = input("Update zip: ")
-                    customer.SetAddress(streetName, streetNumber, city, state, zip)
-                    print("Account Information updated.")
-                    account_edit = False
+                    account_option2 = input ("(A) Edit name \n(B) Edit Address\n>>")
+                    if account_option2.lower()=='a':
+                        firstname = input("Update First Name: ")
+                        lastname = input("Update Last Name: ")
+                        customer.SetName(firstname, lastname)
+                        print("Account Information updated.")
+                        account_edit = False
+                    if account_option2.lower() == 'b':
+                        streetNumber = input("Update Street Number: ")
+                        streetName = input("Update Street Name: ")
+                        city = input("Update city: ")
+                        state = input("Update state: ")
+                        zip = input("Update zip: ")
+                        customer.SetAddress(streetName, streetNumber, city, state, zip)
+                        print("Account Information updated.")
+                        account_edit = False
                 elif account_option.lower()=='o':
                     order.print()
                     account_edit = False
+                elif account_option.lower() == 'd':
+                    customer.DeleteAccount(order)
                 elif account_option.lower()=='b':
+                    account_edit = False
+                else:
+                    print("INVALID INPUT -- returning to main menu")
                     account_edit = False
 
         elif cdl.lower() == 'c':
@@ -101,13 +113,14 @@ if verify:
             while cart_edit:
                 # read card information
                 cart.print()
-                adcb = input("\nAdd to Cart(a)\nDelete(d) by ISBN number\nCheckout(c)\nGo Back(b)\nView Cart(v)\nEdit Address(e):")
+                adcb = input("\n(A) Add to Cart\n(I) View Inventory\n(D) Delete from cart -- by ISBN number\n(C) Checkout\n(B) Go Back\n(V) View Cart\n>>")
                 if adcb.lower()=='a':
                     isbn = input("\nInput ISBN number:")
                     quantity = input("Number of items:")
                     # cart list
                     if inventory.checkQuantity(isbn, quantity)==1:
                         cart.AddToCart(isbn, quantity)
+                        cart.RemoveFromInventory(inventory)
                     elif inventory.checkQuantity(isbn, quantity)==0:
                         print('Inventory doesn\'t have enough quantity.')
                         continue
@@ -115,22 +128,18 @@ if verify:
                         print('Invalid ISBN number.')
                         continue
                 if adcb.lower()=='d':
-                    isbn = input("\nInput ISBN number:")
+                    isbn = input("\nInput ISBN number for the book you want to remove:")
+                    cart.AddBackToInventory(inventory)
                     cart.RemoveFromCart(isbn)
                 elif adcb.lower()=='c':
                     cart.checkout(inventory, order)
+                    cart_edit = False
                 elif adcb.lower() == 'u':
                     inventory.print()
                 elif adcb.lower() == 'v':
                     cart.print()
-                elif adcb.lower() == 'e':
-                    customer.print()
-                    streetName = input("Input Street Name or exit(e): ")
-                    if streetName == 'e':
-                        continue
-                    streetNumber = input("Input Street Number: ")
-                    zipcode = input("Zipcode: ")
-                    customer.SetAddress(streetName, streetNumber, zipcode)
+                elif adcb.lower() == 'i':
+                    inventory.print()
                 elif adcb.lower()=='b':
                     cart_edit = False
                 else: 
