@@ -39,7 +39,7 @@ class Customer:
     # returns address of customer in string format
     def GetAddress(self):
         # self.StreetAddress = self.StreetAddress.loc[self.StreetAddress.index[self.StreetAddress['user']  
-        return  self.StreetName + self.StreetNumber + self.City + self.State + self.Zip
+        return  self.StreetNumber + self.StreetName + self.City + self.State + self.Zip
     def SetCardNumber(self,Number):
         self.CardNumber = Number
     def SetName(self, firstname, lastname):
@@ -62,7 +62,6 @@ class Customer:
     # will remove all orders, inventory of user’s
     def DeleteAccount(self, order):
         self.customerList = self.customerList.drop(self.customerList[self.customerList['user'] == self.Username].index)
-        order.remove(self.Username)
         self.Save2File()
         exit()
     # return void
