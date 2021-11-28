@@ -63,14 +63,14 @@ if verify:
     while(1):
         # the user can see cart information, Delete account, Log out.
         print("\nPlease select from options below:\n")
-        cdl = input("(A) Manage Account \n(C) Cart Options \n(I) View Inventory\n(L) Log Out\n(V) View Order History\n>>")
+        cdl = input("(A) Manage Account \n(I) View Inventory \n(C) Cart Options and Information \n(L) Log Out\n(E) Exit\n>>")
 
         if cdl.lower()=='l':
             customer.Logout()
-        elif cdl.lower()=='v':
-            order.print()
         elif cdl.lower()=='i':
             inventory.print()
+
+
         elif cdl.lower()=='a':
             print("\n------------------------{account_information}-------------------------\n".format(account_information = account_info))
 

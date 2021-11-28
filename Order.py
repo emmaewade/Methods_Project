@@ -9,12 +9,19 @@ class Order:
         self.file='order.csv'
         self.orderList = pd.read_csv(self.file)
 
-    def addNewOrder(self, cardnumber, isbn, quantity, price):
+    def addNewOrder(self, cardnumber, isbn, quantity, price, total):
 
         orderNum = random.randint(1, 5000)
 
-        new_row = pd.Series({"CardNumber":cardnumber, "user": self.Username, "ISBN": isbn, "Quantity": quantity, "Price":price,
-                             "Datetime": datetime.today().strftime('%Y-%m-%d-%H:%M:%S'), "OrderNumber": orderNum})
+        cardName = input("Name on card: ")
+        billingAddress = input("Please insert your billing address STREET NUMBER AND STREET NAME: ")
+        billingCity = input("Please insert billing address CITY: ")
+        billingState = input("Please insert billing address STATE: ")
+        billingZIP = int(input("Please insert billing address ZIP: "))
+
+        new_row = pd.Series({"CardNumber":cardnumber, "user": self.Username, "ISBN": isbn, "Quantity": quantity, "Price":price, "Total":total,
+                             "Datetime": datetime.today().strftime('%Y-%m-%d-%H:%M:%S'), "OrderNumber": orderNum, "CardName": cardName, "BillAddress": billingAddress,
+                             "BillCity": billingCity, "BillState": billingState, "BillZip": billingZIP})
         self.orderList = self.orderList.append(new_row, ignore_index=True)
     def remove(self, user):
         self.orderList.drop(self.orderList.index[self.orderList['user'] == user], inplace=True)
