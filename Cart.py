@@ -10,6 +10,7 @@ class Cart:
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity', 'Price'], dtype=object)
         self.check=False
 
+    #retrieve card number
     def getCardNumber(self):
         return self.CardNumber
 
@@ -36,14 +37,26 @@ class Cart:
             print("Cart empty - can't checkout")
             return
 
+        carttotal = 0
+
+        for i in range(len(self.goodList.index)):
+            isbn = self.goodList.loc[i].ISBN
+            quantity = int(self.goodList.loc[i].Quantity)
+            price = int(self.goodList.loc[i].Price)
+            total = quantity * price
+            carttotal = carttotal + total
+
+        print("Cart total: $", carttotal)
         CardNumber = input("\nInput CardNumber: ")
 
         for i in range(len(self.goodList.index)):
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
             price = int(self.goodList.loc[i].Price)
+            total = quantity * price
             inventory.removeQuantity(isbn, quantity)
-            order.addNewOrder(CardNumber, isbn, quantity, price)
+            order.addNewOrder(CardNumber, isbn, quantity, price, total)
+
 
         self.check = True
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity'], dtype=object)
