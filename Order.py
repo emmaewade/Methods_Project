@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-import random
+
 # keeps track of order number, customer username, date, prints order files, etc.
 
 class Order:
@@ -9,15 +9,7 @@ class Order:
         self.file='order.csv'
         self.orderList = pd.read_csv(self.file)
 
-    def addNewOrder(self, cardnumber, isbn, quantity, price, total):
-
-        orderNum = random.randint(1, 5000)
-
-        cardName = input("Name on card: ")
-        billingAddress = input("Please insert your billing address STREET NUMBER AND STREET NAME: ")
-        billingCity = input("Please insert billing address CITY: ")
-        billingState = input("Please insert billing address STATE: ")
-        billingZIP = int(input("Please insert billing address ZIP: "))
+    def addNewOrder(self, cardnumber, cardName, billingAddress, billingCity, billingState, billingZIP, isbn, quantity, price, total, orderNum):
 
         new_row = pd.Series({"CardNumber":cardnumber, "user": self.Username, "ISBN": isbn, "Quantity": quantity, "Price":price, "Total":total,
                              "Datetime": datetime.today().strftime('%Y-%m-%d-%H:%M:%S'), "OrderNumber": orderNum, "CardName": cardName, "BillAddress": billingAddress,

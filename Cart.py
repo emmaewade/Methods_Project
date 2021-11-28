@@ -3,6 +3,8 @@ from datetime import datetime
 import pandas as pd
 from Inventory import Inventory
 from Order import Order
+import random
+
 class Cart:
     def __init__(self, username):
         self.Username = username
@@ -48,6 +50,12 @@ class Cart:
 
         print("Cart total: $", carttotal)
         CardNumber = input("\nInput CardNumber: ")
+        cardName = input("Name on card: ")
+        billingAddress = input("Please insert your billing address STREET NUMBER AND STREET NAME: ")
+        billingCity = input("Please insert billing address CITY: ")
+        billingState = input("Please insert billing address STATE: ")
+        billingZIP = int(input("Please insert billing address ZIP: "))
+        orderNum = random.randint(1, 5000)
 
         for i in range(len(self.goodList.index)):
             isbn = self.goodList.loc[i].ISBN
@@ -55,7 +63,7 @@ class Cart:
             price = int(self.goodList.loc[i].Price)
             total = quantity * price
             inventory.removeQuantity(isbn, quantity)
-            order.addNewOrder(CardNumber, isbn, quantity, price, total)
+            order.addNewOrder(CardNumber, cardName, billingAddress, billingCity, billingState, billingZIP, isbn, quantity, price, total, orderNum)
 
 
         self.check = True
