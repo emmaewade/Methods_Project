@@ -69,6 +69,8 @@ if verify:
             customer.Logout()
         elif cdl.lower()=='i':
             inventory.print()
+        elif cdl.lower() == 'e':
+            exit()
 
 
         elif cdl.lower()=='a':
