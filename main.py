@@ -3,6 +3,7 @@ import numpy as np
 from Inventory import Inventory
 from Customer import Customer
 from Order import Order
+import sys
 
 ## username and password input for verify
 verify = False
@@ -70,7 +71,7 @@ if verify:
         elif cdl.lower()=='i':
             inventory.print()
         elif cdl.lower() == 'e':
-            exit()
+            sys.exit(0)
 
 
         elif cdl.lower()=='a':
