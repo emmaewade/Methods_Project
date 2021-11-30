@@ -39,8 +39,15 @@ class Cart:
             print("Cart empty - can't checkout")
             return
 
+        #This adds the items that were reserved in the cart back to inventory because we will immediately be checking them back out.
+        for i in range(len(self.goodList.index)):
+            isbn = self.goodList.loc[i].ISBN
+            quantity = int(self.goodList.loc[i].Quantity)
+            inventory.addQuantity(isbn, quantity)
+
         carttotal = 0
 
+        #This will calculate the total of the cart.
         for i in range(len(self.goodList.index)):
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
@@ -50,6 +57,8 @@ class Cart:
 
         print("Cart total: $", carttotal)
 
+        #Below here, we start adding user payment information.
+        #This will loop as long as credit card numbers are invalid (aka should only include numbers)
         while True:
             CardNumber = input("\nInput CardNumber: ")
             if CardNumber.isnumeric() == True:
@@ -72,6 +81,7 @@ class Cart:
             inventory.removeQuantity(isbn, quantity)
             order.addNewOrder(CardNumber, cardName, billingAddress, billingCity, billingState, billingZIP, isbn, quantity, price, total, orderNum)
 
+        #If the user would like to store the card information for this order
         print ("Would you like to store this card information to your account?")
         storeCardInfo = input("(Y) Yes\n(N) No\n>>")
 
@@ -84,6 +94,7 @@ class Cart:
 
         print("\n------Checkout Successful------")
 
+    #If the person has added the item to their cart, it will be reserved and taken out of inventory.
     def RemoveFromInventory(self, inventory):
 
         for i in range(len(self.goodList.index)):
@@ -92,6 +103,7 @@ class Cart:
             price = int(self.goodList.loc[i].Price)
             inventory.removeQuantity(isbn, quantity)
 
+    #If the user deletes something from their cart, this will add it back to inventory -- takes away the reservation.
     def AddBackToInventory(self, inventory):
 
         for i in range(len(self.goodList.index)):
