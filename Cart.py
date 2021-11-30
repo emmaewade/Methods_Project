@@ -34,7 +34,7 @@ class Cart:
 
     # makes an new Order and prints a document
     # returns the new order ID which will be added to the user’s orders array
-    def checkout(self, inventory, order):
+    def checkout(self, inventory, order, customer):
         if (len(self.goodList.index) == 0):
             print("Cart empty - can't checkout")
             return
@@ -49,7 +49,14 @@ class Cart:
             carttotal = carttotal + total
 
         print("Cart total: $", carttotal)
-        CardNumber = input("\nInput CardNumber: ")
+
+        while True:
+            CardNumber = input("\nInput CardNumber: ")
+            if CardNumber.isnumeric() == True:
+                break
+            elif CardNumber.isnumeric() == False:
+                print("Invalid Input. Card Number should contain numbers only.")
+
         cardName = input("Name on card: ")
         billingAddress = input("Please insert your billing address STREET NUMBER AND STREET NAME: ")
         billingCity = input("Please insert billing address CITY: ")
@@ -65,6 +72,11 @@ class Cart:
             inventory.removeQuantity(isbn, quantity)
             order.addNewOrder(CardNumber, cardName, billingAddress, billingCity, billingState, billingZIP, isbn, quantity, price, total, orderNum)
 
+        print ("Would you like to store this card information to your account?")
+        storeCardInfo = input("(Y) Yes\n(N) No\n>>")
+
+        if storeCardInfo.lower() == 'y':
+            customer.EditPaymentInfo(cardName, CardNumber, billingAddress, billingCity, billingState, billingZIP)
 
         self.check = True
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity'], dtype=object)
