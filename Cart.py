@@ -39,12 +39,6 @@ class Cart:
             print("Cart empty - can't checkout")
             return
 
-        #This adds the items that were reserved in the cart back to inventory because we will immediately be checking them back out.
-        for i in range(len(self.goodList.index)):
-            isbn = self.goodList.loc[i].ISBN
-            quantity = int(self.goodList.loc[i].Quantity)
-            inventory.addQuantity(isbn, quantity)
-
         carttotal = 0
 
         #This will calculate the total of the cart.
@@ -78,7 +72,6 @@ class Cart:
             quantity = int(self.goodList.loc[i].Quantity)
             price = int(self.goodList.loc[i].Price)
             total = quantity * price
-            inventory.removeQuantity(isbn, quantity)
             order.addNewOrder(CardNumber, cardName, billingAddress, billingCity, billingState, billingZIP, isbn, quantity, price, total, orderNum)
 
         #If the user would like to store the card information for this order
