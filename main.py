@@ -4,7 +4,6 @@ from Inventory import Inventory
 from Customer import Customer
 from Order import Order
 import sys
-
 ## username and password input for verify
 verify = False
 welcome_message = "WELCOME TO G8-BOOKSHOP"
