@@ -2,7 +2,6 @@
 import pandas as pd
 import numpy as np
 from Cart import Cart
-from tabulate import tabulate
 class Customer:
     customerList=None
     def __init__(self, username):
