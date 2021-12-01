@@ -108,6 +108,12 @@ class Cart:
     def isCheck(self):
         return self.check
 
+    def CartCheck(self):
+        if (len(self.goodList.index) == 0):
+            return False
+        else:
+            return True
+
     def print(self):
         if len(self.goodList) > 0:
             print("\n#######Cart List################")

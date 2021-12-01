@@ -181,7 +181,10 @@ if verify:
                 # (L) Log Out
         elif cdl.lower() == 'l':
         # This will add all items left in cart back to inventory if the user logouts without checking out.
-            cart.AddBackToInventory(inventory)
+            cart = customer.GetCart()
+            check = cart.CartCheck()
+            if check == True:
+                cart.AddBackToInventory(inventory)
             customer.Logout()
 
         #(E) Exit
