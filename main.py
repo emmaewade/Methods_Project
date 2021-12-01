@@ -3,7 +3,7 @@ import numpy as np
 from Inventory import Inventory
 from Customer import Customer
 from Order import Order
-import sys
+import Cart as cart
 
 ## username and password input for verify
 verify = False
@@ -66,50 +66,87 @@ if verify:
         print("\nPlease select from options below:\n")
         cdl = input("(A) Manage Account \n(I) View Inventory \n(C) Cart Options and Information \n(L) Log Out\n(E) Exit\n>>")
 
+        #(L) Log Out
         if cdl.lower()=='l':
+            #This will add all items left in cart back to inventory if the user logouts without checking out.
+            cart.AddBackToInventory(inventory)
             customer.Logout()
+
+        #(I) View Inventory
         elif cdl.lower()=='i':
             inventory.print()
-        elif cdl.lower() == 'e':
-            sys.exit(0)
 
-
+        #(A) Manage Account
         elif cdl.lower()=='a':
             print("\n------------------------{account_information}-------------------------\n".format(account_information = account_info))
 
-            print("MENU: ")
-            account_option = input("(E) Edit account information \n(O) View Order History\n(D) Delete Account\n(B) Go Back \n>>")
             account_edit = True
-            while account_edit:
+            while account_edit == True:
+                print("ACCOUNT MENU: ")
+                account_option = input("(A) View Account Details\n(S) View Shipping Information\n(V) View Billing Information\n(E) Edit account information \n(P) Edit stored payment information\n(O) View Order History\n(D) Delete Account\n(B) Go Back \n>>")
+                account_edit2 = True
+                while account_edit2 == True:
+                    if account_option.lower() == 'a':
+                        customer.printAccount()
+                        print('\n')
+                        account_edit2 = False
+                    elif account_option.lower() == 's':
+                        customer.printShipping()
+                        print('\n')
+                        account_edit2 = False
+                    elif account_option.lower()=='v':
+                        customer.printBilling()
+                        print('\n')
+                        account_edit2 = False
+                    elif account_option.lower()=='e':
+                        account_option2 = input ("(A) Edit name \n(B) Edit Shipping Address\n(E) Go Back to Account Menu\n>>")
+                        if account_option2.lower()=='a':
+                            firstname = input("Update First Name: ")
+                            lastname = input("Update Last Name: ")
+                            customer.SetName(firstname, lastname)
+                            print("Account Information updated.")
+                            account_edit2 = False
+                        elif account_option2.lower() == 'b':
+                            streetNumber = input("Update Street Number: ")
+                            streetName = input("Update Street Name: ")
+                            city = input("Update city: ")
+                            state = input("Update state: ")
+                            zip = input("Update zip: ")
+                            customer.SetAddress(streetName, streetNumber, city, state, zip)
+                            print("Account Information updated.")
+                            account_edit2 = False
+                        elif account_option2.lower() == 'e':
+                            account_edit2 = False
+                    elif account_option.lower() == 'p':
+                        print("Updating Stored Payment Information")
+                        cardName = input("Name on Card: ")
+                        while True:
+                            cardNum = input("Input CardNumber: ")
+                            if cardNum.isnumeric() == True:
+                                break
+                            elif cardNum.isnumeric() == False:
+                                print("Invalid Input. Card Number should contain numbers only.")
+                        billingAddress = input("Billing Address -- STREET NUMBER AND STREET NAME: ")
+                        billingCity = input("Billing City: ")
+                        billingState = input("Billing State: ")
+                        billingZip = input("Billing ZIP: ")
+                        customer.EditPaymentInfo(cardName, cardNum, billingAddress, billingCity, billingState, billingZip)
+                        account_edit2 = False
 
-                if account_option.lower()=='e':
-                    account_option2 = input ("(A) Edit name \n(B) Edit Address\n>>")
-                    if account_option2.lower()=='a':
-                        firstname = input("Update First Name: ")
-                        lastname = input("Update Last Name: ")
-                        customer.SetName(firstname, lastname)
-                        print("Account Information updated.")
-                        account_edit = False
-                    if account_option2.lower() == 'b':
-                        streetNumber = input("Update Street Number: ")
-                        streetName = input("Update Street Name: ")
-                        city = input("Update city: ")
-                        state = input("Update state: ")
-                        zip = input("Update zip: ")
-                        customer.SetAddress(streetName, streetNumber, city, state, zip)
-                        print("Account Information updated.")
-                        account_edit = False
-                elif account_option.lower()=='o':
-                    order.print()
-                    account_edit = False
-                elif account_option.lower() == 'd':
-                    customer.DeleteAccount(order)
-                elif account_option.lower()=='b':
-                    account_edit = False
-                else:
-                    print("INVALID INPUT -- returning to main menu")
+                    elif account_option.lower()=='o':
+                        order.print()
+                        account_edit2 = False
+                    elif account_option.lower() == 'd':
+                        customer.DeleteAccount(order)
+                    elif account_option.lower()=='b':
+                        account_edit2 = False
+                    else:
+                        print("INVALID INPUT -- returning to main menu")
+                        account_edit2 = False
+                if (account_option.lower()=='b'):
                     account_edit = False
 
+        #(C) Cart Options
         elif cdl.lower() == 'c':
             cart = customer.GetCart()
             cart_edit = True
@@ -135,7 +172,7 @@ if verify:
                     cart.AddBackToInventory(inventory)
                     cart.RemoveFromCart(isbn)
                 elif adcb.lower()=='c':
-                    cart.checkout(inventory, order)
+                    cart.checkout(inventory, order, customer)
                     cart_edit = False
                 elif adcb.lower() == 'u':
                     inventory.print()
@@ -148,3 +185,6 @@ if verify:
                 else: 
                     print("Please select from the options below:")
 
+        #(E) Exit
+        elif cdl.lower()=='e':
+            customer.Logout()

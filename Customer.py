@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 from Cart import Cart
+from tabulate import tabulate
 class Customer:
     customerList=None
     def __init__(self, username):
@@ -12,6 +13,11 @@ class Customer:
         self.file = 'customer.csv'
         self.ShoppingCart = Cart(username)
         self.CardNumber=None
+        self.CardName = None
+        self.BillAddress = None
+        self.BillCity = None
+        self.BillState = None
+        self.BillZIP = None
         self.StreetNumber=None
         self.StreetName= None
         self.City = None
@@ -47,6 +53,28 @@ class Customer:
         self.LastName = lastname
         self.customerList.loc[self.customerList['user'] == self.Username, 'First'] = firstname
         self.customerList.loc[self.customerList['user'] == self.Username, 'Last'] = lastname
+        self.Save2File()
+        #self.print()
+
+    def EditPaymentInfo(self, cardName, cardNum, billAddress, billCity, billState, billZip):
+        self.CardNumber = cardNum
+        self.CardName = cardName
+        self.BillAddress = billAddress
+        self.BillCity = billCity
+        self.BillState = billState
+        self.BillZIP = billZip
+        self.customerList.loc[self.customerList['user'] == self.Username, 'CardName'] = cardName
+        self.customerList.loc[self.customerList['user'] == self.Username, 'CardNum'] = cardNum
+        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingAddress'] = billAddress
+        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingCity'] = billCity
+        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingState'] = billState
+        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingZip'] = billZip
+        self.Save2File()
+        self.print()
+
+    def GetPaymentinfo(self):
+        return self.CardNumber + self.CardName + self.BillAddress + self.BillCity + self.BillState + self.BillZIP
+
     # return cardnumber as int
     def GetCardNumber(self):
         return self.CardNumber
@@ -85,5 +113,20 @@ class Customer:
             return False
     def Save2File(self):
         self.customerList.to_csv(self.file, encoding='utf-8', index=False)
+        
+    #user,password,First,Last,StreetName,StreetNumber,City,State,Zip,CardName,CardNum,BillingAddress,BillingCity,BillingState,BillingZip
+    def printAccount(self):
+        df = (self.customerList.loc[self.customerList.index[self.customerList['user'] == self.Username]])
+        print(df[['user', 'password', 'First', 'Last']])
+        #print(self.customerList.loc[self.customerList.index[self.customerList['user'] == self.Username]])
+        
+    def printShipping(self):
+        df = (self.customerList.loc[self.customerList.index[self.customerList['user'] == self.Username]])
+        print(df[['StreetName', 'StreetNumber', 'City', 'State', 'Zip']])
+        
+    def printBilling(self):
+        df = (self.customerList.loc[self.customerList.index[self.customerList['user'] == self.Username]])
+        print(df[['CardName','CardNum','BillingAddress','BillingCity','BillingState','BillingZip']])
+        
     def print(self):
         print(self.customerList.loc[self.customerList.index[self.customerList['user'] == self.Username]])
