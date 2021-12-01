@@ -163,14 +163,10 @@ if verify:
                         continue
                 if adcb.lower()=='d':
                     isbn = input("\nInput ISBN number for the book you want to remove: ")
-                    quantity = int(input("\nInput ISBN number for the book you want to remove: "))
                     compare = cart.InventoryCheck(isbn)
-                    if (quantity <= compare):
-                        inventory.addback(isbn, compare)
-                        cart.RemoveFromCart(isbn)
-                    else:
-                        print("Invalid amount. You are trying to remove more than what is in your cart.")
-                        continue
+                    inventory.addback(isbn, compare)
+                    cart.RemoveFromCart(isbn)
+                    
                 elif adcb.lower()=='c':
                     cart.checkout(inventory, order, customer)
                     cart_edit = False
