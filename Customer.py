@@ -12,11 +12,6 @@ class Customer:
         self.file = 'customer.csv'
         self.ShoppingCart = Cart(username)
         self.CardNumber=None
-        self.CardName = None
-        self.BillAddress = None
-        self.BillCity = None
-        self.BillState = None
-        self.BillZIP = None
         self.StreetNumber=None
         self.StreetName= None
         self.City = None
@@ -52,28 +47,6 @@ class Customer:
         self.LastName = lastname
         self.customerList.loc[self.customerList['user'] == self.Username, 'First'] = firstname
         self.customerList.loc[self.customerList['user'] == self.Username, 'Last'] = lastname
-        self.Save2File()
-        self.print()
-
-    def EditPaymentInfo(self, cardName, cardNum, billAddress, billCity, billState, billZip):
-        self.CardNumber = cardNum
-        self.CardName = cardName
-        self.BillAddress = billAddress
-        self.BillCity = billCity
-        self.BillState = billState
-        self.BillZIP = billZip
-        self.customerList.loc[self.customerList['user'] == self.Username, 'CardName'] = cardName
-        self.customerList.loc[self.customerList['user'] == self.Username, 'CardNum'] = cardNum
-        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingAddress'] = billAddress
-        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingCity'] = billCity
-        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingState'] = billState
-        self.customerList.loc[self.customerList['user'] == self.Username, 'BillingZip'] = billZip
-        self.Save2File()
-        self.print()
-
-    def GetPaymentinfo(self):
-        return self.CardNumber + self.CardName + self.BillAddress + self.BillCity + self.BillState + self.BillZIP
-
     # return cardnumber as int
     def GetCardNumber(self):
         return self.CardNumber
