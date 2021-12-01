@@ -8,6 +8,8 @@ import random
 class Cart:
     def __init__(self, username):
         self.Username = username
+        self.ISBN = None
+        self.quantity = None
         self.CardNumber = str(datetime.today().timestamp())
         self.goodList = pd.DataFrame(columns=['ISBN', 'Quantity', 'Price'], dtype=object)
         self.check=False
@@ -22,9 +24,13 @@ class Cart:
         if (price == -1):
             return "Book does not exist"
 
+        self.ISBN = item
+        self.Quantity = quantity
         new_row = pd.Series({"ISBN": item, "Quantity": quantity, "Price": price})
         self.goodList = self.goodList.append(new_row, ignore_index=True)
 
+    def getQuantity(self):
+        return self.quantity
     def RemoveFromCart(self, isbn):
         # df.drop(df.loc[df['line_race'] == 0].index, inplace=True)
         self.goodList.drop(self.goodList.loc[self.goodList['ISBN'] == isbn].index, inplace=True)
@@ -88,13 +94,8 @@ class Cart:
         print("\n------Checkout Successful------")
 
     #If the person has added the item to their cart, it will be reserved and taken out of inventory.
-    def RemoveFromInventory(self, inventory):
-
-        for i in range(len(self.goodList.index)):
-            isbn = self.goodList.loc[i].ISBN
-            quantity = int(self.goodList.loc[i].Quantity)
-            price = int(self.goodList.loc[i].Price)
-            inventory.removeQuantity(isbn, quantity)
+    def RemoveFromInventory(self, isbn, quantity):
+        print("No go")
 
     #If the user deletes something from their cart, this will add it back to inventory -- takes away the reservation.
     def AddBackToInventory(self, inventory):

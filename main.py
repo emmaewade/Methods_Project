@@ -150,11 +150,11 @@ if verify:
                 adcb = input("\n(A) Add to Cart\n(I) View Inventory\n(D) Delete from cart -- by ISBN number\n(C) Checkout\n(B) Go Back\n(V) View Cart\n>>")
                 if adcb.lower()=='a':
                     isbn = input("\nInput ISBN number:")
-                    quantity = input("Number of items:")
+                    quantity = int(input("Number of items:"))
                     # cart list
                     if inventory.checkQuantity(isbn, quantity)==1:
                         cart.AddToCart(isbn, quantity)
-                        cart.RemoveFromInventory(inventory)
+                        inventory.setQuantity(isbn, quantity)
                     elif inventory.checkQuantity(isbn, quantity)==0:
                         print('Inventory doesn\'t have enough quantity.')
                         continue

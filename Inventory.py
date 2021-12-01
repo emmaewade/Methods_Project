@@ -15,6 +15,12 @@ class Inventory:
         num = self.bookList.loc[self.bookList.Quantity == quantity, "Quantity"]
         return num
 
+    def setQuantity(self, isbn, quantity):
+        num = int(self.inventoryList.loc[self.inventoryList.ISBN == isbn, "Quantity"])
+        num = num - quantity
+        self.inventoryList.loc[self.inventoryList.ISBN == isbn, "Quantity"] = num
+
+
     def addQuantity(self, isbn, num=1):
         self.inventoryList.loc[self.inventoryList.ISBN==isbn, 'Quantity']+=num
         self.save2file()
