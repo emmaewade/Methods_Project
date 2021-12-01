@@ -189,4 +189,8 @@ if verify:
 
         #(E) Exit
         elif cdl.lower()=='e':
+            cart = customer.GetCart()
+            check = cart.CartCheck()
+            if check == True:
+                cart.AddBackToInventory(inventory)
             customer.Logout()
