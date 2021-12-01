@@ -154,7 +154,7 @@ if verify:
                     # cart list
                     if inventory.checkQuantity(isbn, quantity)==1:
                         cart.AddToCart(isbn, quantity)
-                        inventory.setQuantity(isbn, quantity)
+                        inventory.removeInventory(isbn, quantity)
                     elif inventory.checkQuantity(isbn, quantity)==0:
                         print('Inventory doesn\'t have enough quantity.')
                         continue
@@ -162,9 +162,15 @@ if verify:
                         print('Invalid ISBN number.')
                         continue
                 if adcb.lower()=='d':
-                    isbn = input("\nInput ISBN number for the book you want to remove:")
-                    cart.AddBackToInventory(inventory)
-                    cart.RemoveFromCart(isbn)
+                    isbn = input("\nInput ISBN number for the book you want to remove: ")
+                    quantity = int(input("\nInput ISBN number for the book you want to remove: "))
+                    compare = cart.InventoryCheck(isbn)
+                    if (quantity <= compare):
+                        inventory.addback(isbn, compare)
+                        cart.RemoveFromCart(isbn)
+                    else:
+                        print("Invalid amount. You are trying to remove more than what is in your cart.")
+                        continue
                 elif adcb.lower()=='c':
                     cart.checkout(inventory, order, customer)
                     cart_edit = False

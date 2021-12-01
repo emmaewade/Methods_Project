@@ -31,9 +31,11 @@ class Cart:
 
     def getQuantity(self):
         return self.quantity
+
     def RemoveFromCart(self, isbn):
         # df.drop(df.loc[df['line_race'] == 0].index, inplace=True)
         self.goodList.drop(self.goodList.loc[self.goodList['ISBN'] == isbn].index, inplace=True)
+        self.goodList.reset_index(drop=True, inplace=True)
         # x = np.array(self.goodList)
         # x=x[x[:, 0] != item]
         # self.goodList = x.tolist()
@@ -93,18 +95,26 @@ class Cart:
 
         print("\n------Checkout Successful------")
 
-    #If the person has added the item to their cart, it will be reserved and taken out of inventory.
-    def RemoveFromInventory(self, isbn, quantity):
-        print("No go")
 
     #If the user deletes something from their cart, this will add it back to inventory -- takes away the reservation.
+    def InventoryCheck(self, isbn):
+        for i in range(len(self.goodList.index)):
+            if (self.goodList.loc[i].ISBN == isbn):
+                return self.goodList.loc[i].Quantity
+
+        return 0
+
+    def addback(self, inventory, isbn, quantity):
+        for i in range(len(self.goodList.index)):
+            if (self.goodList.loc[i].ISBN == isbn):
+                inventory.addQuantity(isbn, quantity)
+
     def AddBackToInventory(self, inventory):
 
         for i in range(len(self.goodList.index)):
             isbn = self.goodList.loc[i].ISBN
             quantity = int(self.goodList.loc[i].Quantity)
             inventory.addQuantity(isbn, quantity)
-
 
     def isCheck(self):
         return self.check
