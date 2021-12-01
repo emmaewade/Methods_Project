@@ -66,14 +66,8 @@ if verify:
         print("\nPlease select from options below:\n")
         cdl = input("(A) Manage Account \n(I) View Inventory \n(C) Cart Options and Information \n(L) Log Out\n(E) Exit\n>>")
 
-        #(L) Log Out
-        if cdl.lower()=='l':
-            #This will add all items left in cart back to inventory if the user logouts without checking out.
-            cart.AddBackToInventory(inventory)
-            customer.Logout()
-
         #(I) View Inventory
-        elif cdl.lower()=='i':
+        if cdl.lower()=='i':
             inventory.print()
 
         #(A) Manage Account
@@ -184,6 +178,11 @@ if verify:
                     cart_edit = False
                 else: 
                     print("Please select from the options below:")
+                # (L) Log Out
+        elif cdl.lower() == 'l':
+        # This will add all items left in cart back to inventory if the user logouts without checking out.
+            cart.AddBackToInventory(inventory)
+            customer.Logout()
 
         #(E) Exit
         elif cdl.lower()=='e':
